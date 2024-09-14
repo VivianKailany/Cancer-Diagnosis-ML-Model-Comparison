@@ -25,7 +25,7 @@ class RegressaoLogistica():
             self.w -= self.a * grad
         
 
-    def predict(self, X):
+    def predicao(self, X):
         # Adicionando uma coluna de uns a X
         X_com_1 = np.hstack((np.ones((X.shape[0], 1)), X))
         z = np.dot(X_com_1, self.w) 
@@ -33,16 +33,13 @@ class RegressaoLogistica():
         y_pred = self.sigmoid(z)
         
         # Convertendo as previsões para classes binárias
-        y_pred_binary = (y_pred > 0.5).astype(int)
-        return y_pred_binary.flatten()
+        y_pred_binario = (y_pred > 0.5).astype(int)
+        return y_pred_binario.flatten()
 
     def sigmoid(self, z):
         return 1 / (1 + np.exp(-z))
     
-    def calcula_custo(self, y, h):
-        m = len(y)
-        custo = -(1 / m) * np.sum(y * np.log(h) + (1 - y) * np.log(1 - h))
-        return custo
+
 
 
     

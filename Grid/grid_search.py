@@ -4,7 +4,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import f1_score
-
+from Regressao_Logistica.logisticregression import RegressaoLogistica
 
 # Função para Grid Search
 def Grid_Search_SVM(X, y, param_grid, kf):
@@ -48,7 +48,7 @@ def Grid_Search_SVM(X, y, param_grid, kf):
     return melhor_modelo, melhor_params, melhor_media
 
 # Função para Grid Search para DecisionTreeClassifier
-def Grid_Search_DecisionTree(X, y, param_grid, kf):
+def Grid_Search_Tree(X, y, param_grid, kf):
     melhor_params = None
     melhor_media = -np.inf
     melhor_modelo = None
@@ -84,5 +84,46 @@ def Grid_Search_DecisionTree(X, y, param_grid, kf):
                 melhor_params = params
                 melhor_modelo = DecisionTreeClassifier(max_depth=max_depth, min_samples_leaf=min_samples_leaf)
                 melhor_modelo.fit(StandardScaler().fit_transform(X), y)  # Ajuste no conjunto completo
+
+    return melhor_modelo, melhor_params, melhor_media
+
+
+# Função para Grid Search para RegressaoLogistica personalizada
+def Grid_Search_RegressaoLogistica(X, y, param_grid, kf):
+    melhor_params = None
+    melhor_media = -np.inf
+    melhor_modelo = None
+
+    for a in param_grid['a']:
+        for epocas in param_grid['epocas']:
+            params = {'a': a, 'epocas': epocas}
+            metricas = []
+
+            for treino_index, validacao_index in kf.split(X):
+                X_treino, X_validacao = X[treino_index], X[validacao_index]
+                y_treino, y_validacao = y[treino_index], y[validacao_index]
+
+                # Normalizar os dados
+                scaler = StandardScaler()
+                X_treino_normalizado = scaler.fit_transform(X_treino)
+                X_validacao_normalizado = scaler.transform(X_validacao)
+
+                # Criar e treinar o modelo de Regressão Logística
+                modelo = RegressaoLogistica(a=a, epocas=epocas)
+                modelo.fit_gd(X_treino_normalizado, y_treino)
+                y_pred = modelo.predicao(X_validacao_normalizado)
+
+                # Avaliar o modelo
+                metrica = f1_score(y_validacao, y_pred)
+                metricas.append(metrica)
+
+            media = np.mean(metricas)
+            
+            # Atualizar os melhores parâmetros
+            if media > melhor_media:
+                melhor_media = media
+                melhor_params = params
+                melhor_modelo = RegressaoLogistica(a=a, epocas=epocas)
+                melhor_modelo.fit_gd(StandardScaler().fit_transform(X), y)  # Ajuste no conjunto completo
 
     return melhor_modelo, melhor_params, melhor_media
