@@ -24,8 +24,8 @@ Os resultados comparativos dos três modelos, usando validação cruzada com 10 
 | Modelo               | Acurácia | Precisão | Revocação | F1-Score |
 |----------------------|----------|----------|-----------|----------|
 | Regressão Logística   | 99%      | 100%     | 97%       | 98%      |
-| SVM                  | 98%      | 100%     | 95%       | 97%      |
-| Árvore de Decisão     | 93%      | 92%      | 90%       | 91%      |
+| SVM                  | 96%      | 95%     | 95%       | 95%      |
+| Árvore de Decisão     | 94%      | 95%      | 90%       | 92%      |
 
 ## Conclusão
 
