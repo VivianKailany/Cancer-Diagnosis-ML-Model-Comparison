@@ -2,8 +2,6 @@
 
 Projeto de comparação de modelos de aprendizado de máquina para a detecção de câncer de mama.
 
-<<<<<<< HEAD
-=======
 ## Dataset
 
 O conjunto de dados utilizado é o *Breast Cancer Wisconsin Dataset*, que pode ser obtido através do repositório público da UCI Machine Learning Repository. Ele contém 569 instâncias e 30 atributos, representando características de células mamárias, classificadas como benignas ou malignas.
@@ -29,8 +27,6 @@ Os resultados comparativos dos três modelos, usando validação cruzada com 10 
 | SVM                  | 98%      | 100%     | 95%       | 97%      |
 | Árvore de Decisão     | 93%      | 92%      | 90%       | 91%      |
 
-
 ## Conclusão
 
 A análise comparativa mostrou que o modelo de Regressão Logística apresentou um desempenho ligeiramente superior em termos de acurácia e equilíbrio geral entre as previsões positivas e negativas. A Regressão Logística é uma boa escolha para este problema específico de diagnóstico de câncer de mama.
->>>>>>> 87cc0d5d0ce12b781233d84fe4b98cb151e8c88c
